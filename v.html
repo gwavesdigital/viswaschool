@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <meta name="theme-color" content="#002B4A">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Sri Viswa E-Diary">
+
+    <meta name="description"
+          content="Sri Viswa School, Palakollu - E-Diary & Announcement System">
+
+    <title>Sri Viswa School | E-Diary & Announcement System</title>
+
+
+    <!-- PWA -->
+
+    <link rel="manifest" href="manifest.json">
+
+
+    <!-- APP ICON -->
+
+    <link rel="icon"
+          type="image/png"
+          href="sriviswalogo.png">
+
+    <link rel="apple-touch-icon"
+          href="sriviswalogo.png">
+
+
+    <!-- GOOGLE FONTS -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        /* =====================================================
+           SRI VISWA BRAND SYSTEM
+        ===================================================== */
+
+        :root {
+
+            --sv-navy: #002B4A;
+
+            --sv-blue: #005799;
+
+            --sv-bright-blue: #2E83C6;
+
+            --sv-green: #00923F;
+
+            --sv-light-blue: #B0C7E2;
+
+            --white: #FFFFFF;
+
+            --background: #F4F8FC;
+
+            --text: #002B4A;
+
+            --muted: #607789;
+
+            --border: rgba(0, 43, 74, 0.10);
+
+            --shadow:
+                0 20px 55px rgba(0, 43, 74, 0.12);
+        }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                "Inter",
+                sans-serif;
+
+            color:
+                var(--text);
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(46,131,198,0.12),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 90% 80%,
+                    rgba(0,146,63,0.07),
+                    transparent 28%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #FFFFFF 0%,
+                    #F4F8FC 50%,
+                    #EEF5FA 100%
+                );
+
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           BACKGROUND
+        ===================================================== */
+
+        .background {
+
+            position: fixed;
+
+            inset: 0;
+
+            overflow: hidden;
+
+            pointer-events: none;
+
+            z-index: 0;
+        }
+
+
+        .background-glow {
+
+            position: absolute;
+
+            border-radius: 50%;
+
+            filter: blur(80px);
+        }
+
+
+        .glow-blue {
+
+            width: 350px;
+
+            height: 350px;
+
+            top: -160px;
+
+            left: -120px;
+
+            background:
+                var(--sv-bright-blue);
+
+            opacity: 0.20;
+        }
+
+
+        .glow-green {
+
+            width: 300px;
+
+            height: 300px;
+
+            right: -130px;
+
+            bottom: 0;
+
+            background:
+                var(--sv-green);
+
+            opacity: 0.07;
+        }
+
+
+        /* =====================================================
+           GRID
+        ===================================================== */
+
+        .grid {
+
+            position: absolute;
+
+            inset: 0;
+
+            opacity: 0.025;
+
+            background-image:
+
+                linear-gradient(
+                    var(--sv-navy) 1px,
+                    transparent 1px
+                ),
+
+                linear-gradient(
+                    90deg,
+                    var(--sv-navy) 1px,
+                    transparent 1px
+                );
+
+            background-size: 50px 50px;
+        }
+
+
+        /* =====================================================
+           LOGO WATERMARK
+        ===================================================== */
+
+        .watermark {
+
+            position: fixed;
+
+            left: 50%;
+
+            top: 53%;
+
+            width:
+                min(500px, 72vw);
+
+            transform:
+                translate(-50%, -50%);
+
+            opacity: 0.045;
+
+            pointer-events: none;
+
+            user-select: none;
+
+            z-index: 0;
+        }
+
+
+        /* =====================================================
+           APP
+        ===================================================== */
+
+        .app {
+
+            position: relative;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+
+            z-index: 1;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        header {
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 20;
+
+            width: 100%;
+
+            min-height: 82px;
+
+            padding:
+                14px 5%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            background:
+                rgba(255,255,255,0.90);
+
+            backdrop-filter:
+                blur(20px);
+
+            -webkit-backdrop-filter:
+                blur(20px);
+
+            border-bottom:
+                1px solid
+                rgba(0,43,74,0.09);
+
+            box-shadow:
+                0 5px 25px
+                rgba(0,43,74,0.04);
+        }
+
+
+        /* =====================================================
+           HEADER BRAND
+        ===================================================== */
+
+        .header-brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        .header-logo {
+
+            width: 62px;
+
+            height: 62px;
+
+            object-fit: contain;
+
+            background: white;
+
+            border-radius: 12px;
+
+            padding: 3px;
+        }
+
+
+        .header-title {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 3px;
+        }
+
+
+        .header-school {
+
+            font-size: 17px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.4px;
+
+            color:
+                var(--sv-navy);
+        }
+
+
+        .header-location {
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+            letter-spacing: 1.7px;
+
+            color:
+                var(--sv-blue);
+
+            text-transform: uppercase;
+        }
+
+
+        /* =====================================================
+           INSTALL APP
+        ===================================================== */
+
+        .install-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 9px;
+
+            padding:
+                12px 18px;
+
+            border-radius: 12px;
+
+            border:
+                1px solid
+                rgba(0,87,153,0.25);
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    var(--sv-blue),
+                    var(--sv-navy)
+                );
+
+            color:
+                white;
+
+            font-family:
+                inherit;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.7px;
+
+            cursor: pointer;
+
+            box-shadow:
+
+                0 8px 20px
+                rgba(0,87,153,0.20);
+
+            transition:
+                all 0.3s ease;
+        }
+
+
+        .install-btn:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+
+                0 12px 28px
+                rgba(0,87,153,0.28);
+        }
+
+
+        .install-btn:active {
+
+            transform:
+                scale(0.97);
+        }
+
+
+        .install-icon {
+
+            font-size: 16px;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        main {
+
+            flex: 1;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding:
+                55px 20px 45px;
+        }
+
+
+        .hero {
+
+            width:
+                min(1050px, 100%);
+
+            text-align: center;
+        }
+
+
+        /* =====================================================
+           EYEBROW
+        ===================================================== */
+
+        .eyebrow {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding:
+                8px 15px;
+
+            border-radius: 50px;
+
+            background:
+                rgba(0,87,153,0.055);
+
+            border:
+                1px solid
+                rgba(0,87,153,0.10);
+
+            color:
+                var(--sv-blue);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.8px;
+
+            text-transform: uppercase;
+
+            animation:
+                fadeDown 0.8s ease both;
+        }
+
+
+        .eyebrow-dot {
+
+            width: 7px;
+
+            height: 7px;
+
+            border-radius: 50%;
+
+            background:
+                var(--sv-green);
+
+            box-shadow:
+                0 0 10px
+                rgba(0,146,63,0.45);
+        }
+
+
+        /* =====================================================
+           HERO TITLE
+        ===================================================== */
+
+        .hero h1 {
+
+            margin-top: 22px;
+
+            font-family:
+                "Playfair Display",
+                serif;
+
+            font-size:
+                clamp(42px, 7vw, 76px);
+
+            line-height: 1.05;
+
+            letter-spacing:
+                -1.8px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    var(--sv-navy),
+                    var(--sv-blue),
+                    var(--sv-bright-blue)
+                );
+
+            -webkit-background-clip:
+                text;
+
+            background-clip:
+                text;
+
+            color:
+                transparent;
+
+            animation:
+                fadeUp 0.8s ease 0.1s both;
+        }
+
+
+        /* =====================================================
+           SYSTEM TITLE
+        ===================================================== */
+
+        .hero h2 {
+
+            margin-top: 15px;
+
+            color:
+                var(--sv-navy);
+
+            font-size:
+                clamp(17px, 2.5vw, 24px);
+
+            font-weight: 700;
+
+            letter-spacing: 0.2px;
+
+            animation:
+                fadeUp 0.8s ease 0.2s both;
+        }
+
+
+        /* =====================================================
+           LINE
+        ===================================================== */
+
+        .hero-line {
+
+            width: 75px;
+
+            height: 3px;
+
+            margin:
+                21px auto 14px;
+
+            border-radius: 10px;
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    var(--sv-green),
+                    var(--sv-bright-blue)
+                );
+        }
+
+
+        /* =====================================================
+           DESCRIPTION
+        ===================================================== */
+
+        .hero-description {
+
+            max-width: 570px;
+
+            margin:
+                0 auto 38px;
+
+            color:
+                var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           DESK GRID
+        ===================================================== */
+
+        .desk-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(
+                        260px,
+                        350px
+                    )
+                );
+
+            justify-content: center;
+
+            gap: 20px;
+
+            animation:
+                fadeUp 0.9s ease 0.3s both;
+        }
+
+
+        /* =====================================================
+           DESK CARD
+        ===================================================== */
+
+        .desk-card {
+
+            position: relative;
+
+            min-height: 195px;
+
+            padding: 27px;
+
+            text-align: left;
+
+            overflow: hidden;
+
+            border-radius: 22px;
+
+            background:
+
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.97),
+                    rgba(244,249,253,0.90)
+                );
+
+            border:
+                1px solid
+                var(--border);
+
+            box-shadow:
+                var(--shadow);
+
+            cursor: pointer;
+
+            transition:
+                transform 0.35s ease,
+                box-shadow 0.35s ease,
+                border-color 0.35s ease;
+        }
+
+
+        .desk-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 170px;
+
+            height: 170px;
+
+            right: -90px;
+
+            top: -90px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(46,131,198,0.10);
+
+            transition:
+                transform 0.4s ease;
+        }
+
+
+        .desk-card:hover {
+
+            transform:
+                translateY(-7px);
+
+            box-shadow:
+
+                0 25px 55px
+                rgba(0,43,74,0.16);
+
+            border-color:
+                rgba(0,87,153,0.22);
+        }
+
+
+        .desk-card:hover::before {
+
+            transform:
+                scale(1.5);
+        }
+
+
+        /* =====================================================
+           CARD ICON
+        ===================================================== */
+
+        .card-icon {
+
+            width: 55px;
+
+            height: 55px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 16px;
+
+            font-size: 25px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    rgba(0,87,153,0.12),
+                    rgba(46,131,198,0.18)
+                );
+
+            border:
+                1px solid
+                rgba(0,87,153,0.10);
+        }
+
+
+        .principal .card-icon {
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    rgba(0,146,63,0.10),
+                    rgba(46,131,198,0.15)
+                );
+        }
+
+
+        /* =====================================================
+           CARD TITLE
+        ===================================================== */
+
+        .card-title {
+
+            margin-top: 18px;
+
+            font-size: 19px;
+
+            font-weight: 800;
+
+            color:
+                var(--sv-navy);
+        }
+
+
+        /* =====================================================
+           CARD DESCRIPTION
+        ===================================================== */
+
+        .card-description {
+
+            margin-top: 7px;
+
+            max-width: 245px;
+
+            color:
+                var(--muted);
+
+            font-size: 11px;
+
+            line-height: 1.65;
+        }
+
+
+        /* =====================================================
+           CARD ARROW
+        ===================================================== */
+
+        .card-arrow {
+
+            position: absolute;
+
+            right: 22px;
+
+            bottom: 22px;
+
+            width: 35px;
+
+            height: 35px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            color:
+                var(--sv-blue);
+
+            background:
+                rgba(0,87,153,0.06);
+
+            border:
+                1px solid
+                rgba(0,87,153,0.10);
+
+            font-size: 18px;
+
+            transition:
+                all 0.3s ease;
+        }
+
+
+        .desk-card:hover .card-arrow {
+
+            transform:
+                translateX(5px);
+
+            background:
+                rgba(0,146,63,0.08);
+
+            color:
+                var(--sv-green);
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+
+            width: 100%;
+
+            padding: 20px;
+
+            text-align: center;
+
+            background:
+                rgba(255,255,255,0.80);
+
+            border-top:
+                1px solid
+                rgba(0,43,74,0.08);
+
+            backdrop-filter:
+                blur(15px);
+
+            -webkit-backdrop-filter:
+                blur(15px);
+        }
+
+
+        .footer-designed {
+
+            color:
+                #718595;
+
+            font-size: 11px;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .footer-designed strong {
+
+            color:
+                var(--sv-blue);
+        }
+
+
+        .footer-phone {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            margin-top: 7px;
+
+            color:
+                var(--sv-green);
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            transition:
+                0.25s ease;
+        }
+
+
+        .footer-phone:hover {
+
+            color:
+                var(--sv-blue);
+        }
+
+
+        /* =====================================================
+           INSTALL MODAL
+        ===================================================== */
+
+        .modal {
+
+            position: fixed;
+
+            inset: 0;
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(0,43,74,0.48);
+
+            backdrop-filter:
+                blur(9px);
+
+            -webkit-backdrop-filter:
+                blur(9px);
+
+            z-index: 100;
+        }
+
+
+        .modal.show {
+
+            display: flex;
+        }
+
+
+        .modal-box {
+
+            width:
+                min(410px, 100%);
+
+            padding: 30px;
+
+            text-align: center;
+
+            border-radius: 24px;
+
+            background:
+                rgba(255,255,255,0.98);
+
+            border:
+                1px solid
+                rgba(0,43,74,0.10);
+
+            box-shadow:
+                0 30px 80px
+                rgba(0,43,74,0.28);
+
+            animation:
+                modalIn 0.3s ease;
+        }
+
+
+        .modal-icon {
+
+            font-size: 40px;
+        }
+
+
+        .modal-box h3 {
+
+            margin-top: 12px;
+
+            color:
+                var(--sv-navy);
+
+            font-size: 21px;
+        }
+
+
+        .modal-box p {
+
+            margin-top: 12px;
+
+            color:
+                var(--muted);
+
+            font-size: 12px;
+
+            line-height: 1.7;
+        }
+
+
+        .modal-close {
+
+            margin-top: 20px;
+
+            padding:
+                10px 24px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background:
+                var(--sv-navy);
+
+            color:
+                white;
+
+            font-family:
+                inherit;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+
+        /* =====================================================
+           ANIMATIONS
+        ===================================================== */
+
+        @keyframes fadeDown {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(-15px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        @keyframes fadeUp {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(20px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        @keyframes modalIn {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    scale(0.94);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    scale(1);
+            }
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            header {
+
+                min-height: 70px;
+
+                padding:
+                    10px 16px;
+            }
+
+
+            .header-logo {
+
+                width: 48px;
+
+                height: 48px;
+            }
+
+
+            .header-school {
+
+                font-size: 12px;
+            }
+
+
+            .header-location {
+
+                font-size: 8px;
+
+                letter-spacing: 1.2px;
+            }
+
+
+            .install-btn {
+
+                padding:
+                    10px 12px;
+
+                font-size: 9px;
+            }
+
+
+            .install-btn span:last-child {
+
+                display: none;
+            }
+
+
+            main {
+
+                padding:
+                    45px 16px 35px;
+            }
+
+
+            .hero h1 {
+
+                font-size:
+                    clamp(
+                        38px,
+                        11vw,
+                        55px
+                    );
+
+                letter-spacing:
+                    -1px;
+            }
+
+
+            .hero h2 {
+
+                font-size: 16px;
+            }
+
+
+            .hero-description {
+
+                font-size: 11px;
+
+                margin-bottom: 28px;
+            }
+
+
+            .desk-grid {
+
+                grid-template-columns: 1fr;
+
+                max-width: 390px;
+
+                margin: auto;
+
+                gap: 14px;
+            }
+
+
+            .desk-card {
+
+                min-height: 170px;
+
+                padding: 24px;
+            }
+
+
+            .card-title {
+
+                font-size: 18px;
+            }
+
+
+            footer {
+
+                padding:
+                    18px 15px
+                    calc(
+                        18px +
+                        env(safe-area-inset-bottom)
+                    );
+            }
+
+
+            .watermark {
+
+                width: 85vw;
+
+                opacity: 0.035;
+            }
+
+        }
+
+
+        /* =====================================================
+           SMALL PHONE
+        ===================================================== */
+
+        @media (max-width: 380px) {
+
+            .header-logo {
+
+                width: 42px;
+
+                height: 42px;
+            }
+
+
+            .header-school {
+
+                font-size: 11px;
+            }
+
+
+            .hero h1 {
+
+                font-size: 37px;
+            }
+
+
+            .desk-card {
+
+                min-height: 160px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         BACKGROUND
+    ===================================================== -->
+
+    <div class="background">
+
+        <div class="background-glow glow-blue"></div>
+
+        <div class="background-glow glow-green"></div>
+
+        <div class="grid"></div>
+
+    </div>
+
+
+    <!-- =====================================================
+         WATERMARK
+    ===================================================== -->
+
+    <img
+        src="sriviswalogo.png"
+        class="watermark"
+        alt=""
+        aria-hidden="true"
+    >
+
+
+    <!-- =====================================================
+         APP
+    ===================================================== -->
+
+    <div class="app">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================= -->
+
+        <header>
+
+            <div class="header-brand">
+
+                <img
+                    src="sriviswalogo.png"
+                    class="header-logo"
+                    alt="Sri Viswa Group of Institutions"
+                >
+
+                <div class="header-title">
+
+                    <div class="header-school">
+                        SRI VISWA SCHOOL
+                    </div>
+
+                    <div class="header-location">
+                        PALAKOLLU
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- INSTALL -->
+
+            <button
+                id="installButton"
+                class="install-btn"
+                type="button">
+
+                <span class="install-icon">
+                    📲
+                </span>
+
+                <span>
+                    INSTALL APP
+                </span>
+
+            </button>
+
+        </header>
+
+
+        <!-- =================================================
+             MAIN
+        ================================================= -->
+
+        <main>
+
+            <section class="hero">
+
+
+                <!-- PLATFORM -->
+
+                <div class="eyebrow">
+
+                    <span class="eyebrow-dot"></span>
+
+                    DIGITAL SCHOOL PLATFORM
+
+                </div>
+
+
+                <!-- MAIN TITLE -->
+
+                <h1>
+                    Sri Viswa School
+                </h1>
+
+
+                <!-- SYSTEM -->
+
+                <h2>
+                    E-Diary & Announcement System
+                </h2>
+
+
+                <div class="hero-line"></div>
+
+
+                <p class="hero-description">
+
+                    A simple, secure and connected digital space
+                    for teachers and school administration.
+
+                </p>
+
+
+                <!-- =================================================
+                     DESK CARDS
+                ================================================= -->
+
+                <div class="desk-grid">
+
+
+                    <!-- TEACHER -->
+
+                    <div
+                        class="desk-card teacher"
+                        onclick="openTeacherDesk()">
+
+                        <div class="card-icon">
+                            👨‍🏫
+                        </div>
+
+                        <div class="card-title">
+                            Teacher Desk
+                        </div>
+
+                        <div class="card-description">
+
+                            Manage E-Diary, daily updates,
+                            student communication and announcements.
+
+                        </div>
+
+                        <div class="card-arrow">
+                            →
+                        </div>
+
+                    </div>
+
+
+                    <!-- PRINCIPAL -->
+
+                    <div
+                        class="desk-card principal"
+                        onclick="openPrincipalDesk()">
+
+                        <div class="card-icon">
+                            👑
+                        </div>
+
+                        <div class="card-title">
+                            Principal Desk
+                        </div>
+
+                        <div class="card-description">
+
+                            School-wide announcements,
+                            monitoring and administrative controls.
+
+                        </div>
+
+                        <div class="card-arrow">
+                            →
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================= -->
+
+        <footer>
+
+            <div class="footer-designed">
+
+                Designed by
+
+                <strong>
+                    Team @Valiass
+                </strong>
+
+            </div>
+
+
+            <a
+                href="tel:+918985361991"
+                class="footer-phone">
+
+                📞 +91 8985361991
+
+            </a>
+
+        </footer>
+
+    </div>
+
+
+    <!-- =====================================================
+         INSTALL MODAL
+    ===================================================== -->
+
+    <div
+        id="installModal"
+        class="modal">
+
+        <div class="modal-box">
+
+            <div class="modal-icon">
+                📲
+            </div>
+
+            <h3>
+                Install Sri Viswa App
+            </h3>
+
+            <p id="installMessage">
+
+                Add Sri Viswa School to your home screen
+                for quick access.
+
+            </p>
+
+            <button
+                class="modal-close"
+                onclick="closeInstallModal()">
+
+                Close
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+        /* =====================================================
+           PWA INSTALL
+        ===================================================== */
+
+        let deferredPrompt = null;
+
+
+        const installButton =
+            document.getElementById(
+                "installButton"
+            );
+
+
+        const installModal =
+            document.getElementById(
+                "installModal"
+            );
+
+
+        const installMessage =
+            document.getElementById(
+                "installMessage"
+            );
+
+
+        /* =====================================================
+           INSTALL PROMPT
+        ===================================================== */
+
+        window.addEventListener(
+            "beforeinstallprompt",
+            function(event) {
+
+                event.preventDefault();
+
+                deferredPrompt = event;
+
+            }
+        );
+
+
+        /* =====================================================
+           INSTALL BUTTON
+        ===================================================== */
+
+        installButton.addEventListener(
+            "click",
+            async function() {
+
+
+                /* ANDROID / CHROME */
+
+                if (deferredPrompt) {
+
+                    deferredPrompt.prompt();
+
+                    const result =
+                        await deferredPrompt.userChoice;
+
+                    if (
+                        result.outcome ===
+                        "accepted"
+                    ) {
+
+                        console.log(
+                            "Sri Viswa App Installed"
+                        );
+
+                    }
+
+                    deferredPrompt = null;
+
+                    return;
+                }
+
+
+                /* IOS */
+
+                const isIOS =
+                    /iphone|ipad|ipod/i.test(
+                        navigator.userAgent
+                    );
+
+
+                const isStandalone =
+                    window.navigator.standalone === true ||
+                    window.matchMedia(
+                        "(display-mode: standalone)"
+                    ).matches;
+
+
+                if (
+                    isIOS &&
+                    !isStandalone
+                ) {
+
+                    installMessage.innerHTML =
+
+                        "On your iPhone or iPad:<br><br>" +
+
+                        "① Tap the <strong>Share</strong> button.<br>" +
+
+                        "② Select <strong>Add to Home Screen</strong>.<br>" +
+
+                        "③ Tap <strong>Add</strong>.";
+
+                    installModal.classList.add(
+                        "show"
+                    );
+
+                    return;
+                }
+
+
+                /* ALREADY INSTALLED */
+
+                if (isStandalone) {
+
+                    installMessage.innerHTML =
+
+                        "Sri Viswa School is already " +
+                        "installed on this device.";
+
+                    installModal.classList.add(
+                        "show"
+                    );
+
+                    return;
+                }
+
+
+                /* FALLBACK */
+
+                installMessage.innerHTML =
+
+                    "Open your browser menu and look for " +
+
+                    "<strong>Install App</strong> or " +
+
+                    "<strong>Add to Home Screen</strong>.";
+
+                installModal.classList.add(
+                    "show"
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           CLOSE MODAL
+        ===================================================== */
+
+        function closeInstallModal() {
+
+            installModal.classList.remove(
+                "show"
+            );
+
+        }
+
+
+        /* =====================================================
+           OUTSIDE MODAL
+        ===================================================== */
+
+        installModal.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target ===
+                    installModal
+                ) {
+
+                    closeInstallModal();
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           APP INSTALLED
+        ===================================================== */
+
+        window.addEventListener(
+            "appinstalled",
+            function() {
+
+                deferredPrompt = null;
+
+                installButton.innerHTML =
+
+                    '<span class="install-icon">✓</span>' +
+
+                    '<span>APP INSTALLED</span>';
+
+                installButton.disabled = true;
+
+            }
+        );
+
+
+        /* =====================================================
+           TEACHER DESK
+        ===================================================== */
+
+        function openTeacherDesk() {
+
+            window.location.href =
+                "teacher.html";
+
+        }
+
+
+        /* =====================================================
+           PRINCIPAL DESK
+        ===================================================== */
+
+        function openPrincipalDesk() {
+
+            window.location.href =
+                "principal.html";
+
+        }
+
+
+        /* =====================================================
+           SERVICE WORKER
+        ===================================================== */
+
+        if (
+            "serviceWorker" in navigator
+        ) {
+
+            window.addEventListener(
+                "load",
+                function() {
+
+                    navigator.serviceWorker
+                        .register(
+                            "service-worker.js"
+                        )
+                        .then(function() {
+
+                            console.log(
+                                "Sri Viswa Service Worker Ready"
+                            );
+
+                        })
+                        .catch(function(error) {
+
+                            console.log(
+                                "Service Worker Error:",
+                                error
+                            );
+
+                        });
+
+                }
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>
