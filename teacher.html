@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#002B4A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Sri Viswa Teacher Desk">
+
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="sriviswalogo.png">
+<link rel="apple-touch-icon" href="sriviswalogo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<title>Teacher Desk | Sri Viswa School</title>
+
+<style>
+:root{
+    --sv-navy:#002B4A;
+    --sv-blue:#005799;
+    --sv-bright-blue:#2E83C6;
+    --sv-green:#00923F;
+    --white:#FFFFFF;
+    --background:#F4F8FC;
+    --text:#002B4A;
+    --muted:#607789;
+    --border:rgba(0,43,74,.10);
+    --shadow:0 20px 55px rgba(0,43,74,.12);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+    min-height:100vh;
+    font-family:"Inter",sans-serif;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 10% 10%,rgba(46,131,198,.12),transparent 30%),
+        radial-gradient(circle at 90% 80%,rgba(0,146,63,.07),transparent 28%),
+        linear-gradient(135deg,#fff 0%,#F4F8FC 50%,#EEF5FA 100%);
+    overflow-x:hidden;
+}
+
+.background{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:0;
+}
+
+.background-glow{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(80px);
+}
+
+.glow-blue{
+    width:350px;
+    height:350px;
+    top:-160px;
+    left:-120px;
+    background:var(--sv-bright-blue);
+    opacity:.20;
+}
+
+.glow-green{
+    width:300px;
+    height:300px;
+    right:-130px;
+    bottom:0;
+    background:var(--sv-green);
+    opacity:.07;
+}
+
+.grid{
+    position:absolute;
+    inset:0;
+    opacity:.025;
+    background-image:
+        linear-gradient(var(--sv-navy) 1px,transparent 1px),
+        linear-gradient(90deg,var(--sv-navy) 1px,transparent 1px);
+    background-size:50px 50px;
+}
+
+.watermark{
+    position:fixed;
+    left:50%;
+    top:53%;
+    width:min(500px,72vw);
+    transform:translate(-50%,-50%);
+    opacity:.035;
+    pointer-events:none;
+    user-select:none;
+    z-index:0;
+}
+
+.app{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    z-index:1;
+}
+
+header{
+    position:sticky;
+    top:0;
+    z-index:20;
+    width:100%;
+    min-height:78px;
+    padding:12px 5%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    background:rgba(255,255,255,.90);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(0,43,74,.09);
+    box-shadow:0 5px 25px rgba(0,43,74,.04);
+}
+
+.header-brand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.header-logo{
+    width:56px;
+    height:56px;
+    object-fit:contain;
+    background:#fff;
+    border-radius:12px;
+    padding:3px;
+}
+
+.header-title{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+}
+
+.header-school{
+    font-size:16px;
+    font-weight:800;
+    letter-spacing:.4px;
+}
+
+.header-location{
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:1.7px;
+    color:var(--sv-blue);
+}
+
+.header-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.header-btn{
+    border:1px solid rgba(0,43,74,.10);
+    background:#fff;
+    color:var(--sv-navy);
+    padding:10px 15px;
+    border-radius:11px;
+    font-family:inherit;
+    font-size:10px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.header-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(0,43,74,.10);
+}
+
+.logout{
+    background:var(--sv-navy);
+    color:#fff;
+}
+
+main{
+    flex:1;
+    width:min(1180px,100%);
+    margin:auto;
+    padding:35px 20px 50px;
+}
+
+.page-heading{
+    margin-bottom:25px;
+    animation:fadeUp .7s ease both;
+}
+
+.eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 13px;
+    border-radius:50px;
+    background:rgba(0,87,153,.055);
+    border:1px solid rgba(0,87,153,.10);
+    color:var(--sv-blue);
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:1.6px;
+}
+
+.dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--sv-green);
+    box-shadow:0 0 10px rgba(0,146,63,.45);
+}
+
+.page-heading h1{
+    margin-top:14px;
+    font-family:"Playfair Display",serif;
+    font-size:clamp(34px,5vw,52px);
+    line-height:1.05;
+    background:linear-gradient(135deg,var(--sv-navy),var(--sv-blue),var(--sv-bright-blue));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.page-heading p{
+    margin-top:8px;
+    color:var(--muted);
+    font-size:12px;
+}
+
+.today{
+    color:var(--sv-blue);
+    font-weight:700;
+}
+
+.quick-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.quick-card{
+    position:relative;
+    padding:20px;
+    border-radius:18px;
+    background:rgba(255,255,255,.84);
+    border:1px solid var(--border);
+    box-shadow:0 12px 35px rgba(0,43,74,.07);
+    cursor:pointer;
+    transition:.3s;
+}
+
+.quick-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 20px 45px rgba(0,43,74,.13);
+}
+
+.quick-icon{
+    width:43px;
+    height:43px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:13px;
+    font-size:20px;
+    background:linear-gradient(135deg,rgba(0,87,153,.10),rgba(46,131,198,.17));
+}
+
+.quick-card h3{
+    margin-top:13px;
+    font-size:15px;
+    font-weight:800;
+}
+
+.quick-card p{
+    margin-top:5px;
+    font-size:10px;
+    line-height:1.6;
+    color:var(--muted);
+}
+
+.panel{
+    background:rgba(255,255,255,.90);
+    border:1px solid var(--border);
+    border-radius:22px;
+    box-shadow:var(--shadow);
+    padding:25px;
+    margin-bottom:22px;
+}
+
+.panel-heading{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.panel-heading h2{
+    font-size:18px;
+    font-weight:800;
+}
+
+.panel-heading span{
+    font-size:10px;
+    color:var(--muted);
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.field label{
+    font-size:10px;
+    font-weight:800;
+    color:var(--sv-navy);
+    letter-spacing:.3px;
+}
+
+.field input,
+.field select,
+.field textarea{
+    width:100%;
+    border:1px solid rgba(0,43,74,.12);
+    background:#F8FBFD;
+    border-radius:11px;
+    padding:12px;
+    font-family:inherit;
+    font-size:11px;
+    color:var(--text);
+    outline:none;
+    transition:.25s;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+    border-color:var(--sv-bright-blue);
+    background:#fff;
+    box-shadow:0 0 0 3px rgba(46,131,198,.09);
+}
+
+.full{
+    grid-column:span 2;
+}
+
+.field textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+.form-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:20px;
+    padding-top:18px;
+    border-top:1px solid rgba(0,43,74,.08);
+}
+
+.btn{
+    border:none;
+    border-radius:11px;
+    padding:12px 17px;
+    font-family:inherit;
+    font-size:10px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+.btn-draft{
+    background:#EEF5FA;
+    color:var(--sv-blue);
+}
+
+.btn-clear{
+    background:#F5F5F5;
+    color:#667;
+}
+
+.btn-send{
+    background:linear-gradient(135deg,var(--sv-blue),var(--sv-navy));
+    color:#fff;
+    box-shadow:0 8px 20px rgba(0,87,153,.20);
+}
+
+.status{
+    margin-top:12px;
+    font-size:10px;
+    color:var(--sv-green);
+    font-weight:700;
+}
+
+.entry{
+    padding:15px;
+    border:1px solid rgba(0,43,74,.08);
+    border-radius:15px;
+    background:#FAFCFE;
+    margin-bottom:10px;
+}
+
+.entry-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.entry-title{
+    font-size:12px;
+    font-weight:800;
+}
+
+.entry-meta{
+    margin-top:5px;
+    color:var(--muted);
+    font-size:9px;
+}
+
+.badge{
+    padding:5px 9px;
+    border-radius:30px;
+    font-size:8px;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.pending{
+    background:#FFF5D8;
+    color:#A36B00;
+}
+
+.approved{
+    background:#E5F7EC;
+    color:#087B39;
+}
+
+.returned{
+    background:#FCE7E7;
+    color:#B32626;
+}
+
+.announcement{
+    padding:15px;
+    border-left:3px solid var(--sv-green);
+    background:#F7FBF9;
+    border-radius:10px;
+    margin-bottom:10px;
+}
+
+.announcement h4{
+    font-size:12px;
+    font-weight:800;
+}
+
+.announcement p{
+    margin-top:5px;
+    font-size:10px;
+    line-height:1.6;
+    color:var(--muted);
+}
+
+.empty{
+    padding:25px;
+    text-align:center;
+    color:var(--muted);
+    font-size:11px;
+}
+
+footer{
+    width:100%;
+    padding:18px;
+    text-align:center;
+    background:rgba(255,255,255,.80);
+    border-top:1px solid rgba(0,43,74,.08);
+    backdrop-filter:blur(15px);
+}
+
+.footer-designed{
+    color:#718595;
+    font-size:10px;
+}
+
+.footer-designed strong{
+    color:var(--sv-blue);
+}
+
+.footer-phone{
+    display:inline-block;
+    margin-top:6px;
+    color:var(--sv-green);
+    text-decoration:none;
+    font-size:11px;
+    font-weight:800;
+}
+
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(18px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+@media(max-width:800px){
+    .quick-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .full{
+        grid-column:span 2;
+    }
+}
+
+@media(max-width:600px){
+    header{
+        padding:10px 15px;
+    }
+
+    .header-logo{
+        width:46px;
+        height:46px;
+    }
+
+    .header-school{
+        font-size:12px;
+    }
+
+    .header-location{
+        font-size:7px;
+    }
+
+    .header-btn{
+        padding:9px 11px;
+        font-size:9px;
+    }
+
+    main{
+        padding:25px 14px 35px;
+    }
+
+    .panel{
+        padding:18px;
+        border-radius:18px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:span 1;
+    }
+
+    .form-actions{
+        flex-direction:column;
+    }
+
+    .btn{
+        width:100%;
+    }
+
+    .entry-top{
+        flex-direction:column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background">
+    <div class="background-glow glow-blue"></div>
+    <div class="background-glow glow-green"></div>
+    <div class="grid"></div>
+</div>
+
+<img src="sriviswalogo.png" class="watermark" alt="">
+
+<div class="app">
+
+<header>
+    <div class="header-brand">
+        <img src="sriviswalogo.png" class="header-logo"
+             alt="Sri Viswa School">
+
+        <div class="header-title">
+            <div class="header-school">SRI VISWA SCHOOL</div>
+            <div class="header-location">PALAKOLLU</div>
+        </div>
+    </div>
+
+    <div class="header-actions">
+        <button class="header-btn" onclick="goHome()">⌂ HOME</button>
+        <button class="header-btn logout" onclick="logout()">LOGOUT</button>
+    </div>
+</header>
+
+<main>
+
+<section class="page-heading">
+    <div class="eyebrow">
+        <span class="dot"></span>
+        TEACHER PORTAL
+    </div>
+
+    <h1>Teacher Desk</h1>
+
+    <p>
+        Manage your daily E-Diary, announcements and submissions.
+        <span class="today" id="today"></span>
+    </p>
+</section>
+
+
+<div class="quick-grid">
+
+    <div class="quick-card" onclick="scrollToSection('diaryPanel')">
+        <div class="quick-icon">📖</div>
+        <h3>E-Diary</h3>
+        <p>Create and submit today's classwork and homework.</p>
+    </div>
+
+    <div class="quick-card" onclick="scrollToSection('announcementPanel')">
+        <div class="quick-icon">📢</div>
+        <h3>Announcements</h3>
+        <p>View official announcements from the Principal Desk.</p>
+    </div>
+
+    <div class="quick-card" onclick="scrollToSection('submissionPanel')">
+        <div class="quick-icon">📋</div>
+        <h3>My Submissions</h3>
+        <p>Track your E-Diary submissions and review status.</p>
+    </div>
+
+</div>
+
+
+<section class="panel" id="diaryPanel">
+
+    <div class="panel-heading">
+        <h2>📖 Daily E-Diary</h2>
+        <span>Teacher Entry</span>
+    </div>
+
+    <form id="diaryForm">
+
+        <div class="form-grid">
+
+            <div class="field">
+                <label>DATE</label>
+                <input type="date" id="diaryDate" required>
+            </div>
+
+            <div class="field">
+                <label>CLASS</label>
+                <select id="className" required>
+                    <option value="">Select Class</option>
+                    <option>Nursery</option>
+                    <option>LKG</option>
+                    <option>UKG</option>
+                    <option>1st Class</option>
+                    <option>2nd Class</option>
+                    <option>3rd Class</option>
+                    <option>4th Class</option>
+                    <option>5th Class</option>
+                    <option>6th Class</option>
+                    <option>7th Class</option>
+                    <option>8th Class</option>
+                    <option>9th Class</option>
+                    <option>10th Class</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>SECTION</label>
+                <select id="sectionName" required>
+                    <option value="">Select Section</option>
+                    <option>A</option>
+                    <option>B</option>
+                    <option>C</option>
+                    <option>D</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>SUBJECT</label>
+                <input type="text" id="subjectName"
+                       placeholder="Enter subject" required>
+            </div>
+
+            <div class="field full">
+                <label>CLASSWORK</label>
+                <textarea id="classwork"
+                          placeholder="Enter today's classwork..."
+                          required></textarea>
+            </div>
+
+            <div class="field full">
+                <label>HOMEWORK</label>
+                <textarea id="homework"
+                          placeholder="Enter today's homework..."
+                          required></textarea>
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+            <button type="button"
+                    class="btn btn-draft"
+                    onclick="saveDraft()">
+                💾 SAVE DRAFT
+            </button>
+
+            <button type="button"
+                    class="btn btn-clear"
+                    onclick="clearDiary()">
+                🗑️ CLEAR
+            </button>
+
+            <button type="submit"
+                    class="btn btn-send">
+                📤 SEND TO PRINCIPAL DESK
+            </button>
+        </div>
+
+        <div class="status" id="draftStatus"></div>
+
+    </form>
+
+</section>
+
+
+<section class="panel" id="announcementPanel">
+
+    <div class="panel-heading">
+        <h2>📢 School Announcements</h2>
+        <span>Official Updates</span>
+    </div>
+
+    <div id="announcementList"></div>
+
+</section>
+
+
+<section class="panel" id="submissionPanel">
+
+    <div class="panel-heading">
+        <h2>📋 My Submissions</h2>
+        <span>Submission History</span>
+    </div>
+
+    <div id="submissionList"></div>
+
+</section>
+
+</main>
+
+<footer>
+
+    <div class="footer-designed">
+        Designed by <strong>Team @Valiass</strong>
+    </div>
+
+    <a href="tel:+918985361991" class="footer-phone">
+        📞 +91 8985361991
+    </a>
+
+</footer>
+
+</div>
+
+
+<script>
+
+const TEACHER_PASSWORD = "sriviswa";
+
+if(sessionStorage.getItem("teacherLoggedIn") !== "true"){
+    window.location.href = "index.html";
+}
+
+function goHome(){
+    window.location.href = "index.html";
+}
+
+function logout(){
+    sessionStorage.removeItem("teacherLoggedIn");
+    window.location.href = "index.html";
+}
+
+function scrollToSection(id){
+    document.getElementById(id).scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+}
+
+function todayDate(){
+
+    const now = new Date();
+
+    const options = {
+        weekday:"long",
+        year:"numeric",
+        month:"long",
+        day:"numeric"
+    };
+
+    document.getElementById("today").textContent =
+        " • " + now.toLocaleDateString("en-IN",options);
+
+    const iso =
+        now.getFullYear() + "-" +
+        String(now.getMonth()+1).padStart(2,"0") + "-" +
+        String(now.getDate()).padStart(2,"0");
+
+    document.getElementById("diaryDate").value = iso;
+}
+
+function getDiaryData(){
+
+    return {
+        date:document.getElementById("diaryDate").value,
+        className:document.getElementById("className").value,
+        section:document.getElementById("sectionName").value,
+        subject:document.getElementById("subjectName").value,
+        classwork:document.getElementById("classwork").value,
+        homework:document.getElementById("homework").value
+    };
+}
+
+function saveDraft(){
+
+    const data = getDiaryData();
+
+    localStorage.setItem(
+        "teacherDiaryDraft",
+        JSON.stringify(data)
+    );
+
+    document.getElementById("draftStatus").textContent =
+        "✓ Draft saved successfully on this device.";
+}
+
+function loadDraft(){
+
+    const saved =
+        localStorage.getItem("teacherDiaryDraft");
+
+    if(!saved) return;
+
+    const data = JSON.parse(saved);
+
+    document.getElementById("diaryDate").value = data.date || "";
+    document.getElementById("className").value = data.className || "";
+    document.getElementById("sectionName").value = data.section || "";
+    document.getElementById("subjectName").value = data.subject || "";
+    document.getElementById("classwork").value = data.classwork || "";
+    document.getElementById("homework").value = data.homework || "";
+}
+
+function clearDiary(){
+
+    document.getElementById("diaryForm").reset();
+
+    localStorage.removeItem("teacherDiaryDraft");
+
+    document.getElementById("draftStatus").textContent =
+        "Form cleared.";
+    
+    todayDate();
+}
+
+document.getElementById("diaryForm")
+.addEventListener("submit",function(event){
+
+    event.preventDefault();
+
+    const data = getDiaryData();
+
+    const job = {
+        id:Date.now(),
+        ...data,
+        status:"Pending Principal Review",
+        submittedAt:new Date().toISOString()
+    };
+
+    const pending =
+        JSON.parse(
+            localStorage.getItem("principalPendingJobs") || "[]"
+        );
+
+    pending.push(job);
+
+    localStorage.setItem(
+        "principalPendingJobs",
+        JSON.stringify(pending)
+    );
+
+    const entries =
+        JSON.parse(
+            localStorage.getItem("teacherEntries") || "[]"
+        );
+
+    entries.push(job);
+
+    localStorage.setItem(
+        "teacherEntries",
+        JSON.stringify(entries)
+    );
+
+    localStorage.removeItem("teacherDiaryDraft");
+
+    document.getElementById("draftStatus").textContent =
+        "✓ E-Diary sent successfully to Principal Desk.";
+
+    this.reset();
+
+    todayDate();
+
+    loadEntries();
+});
+
+
+function loadEntries(){
+
+    const entries =
+        JSON.parse(
+            localStorage.getItem("teacherEntries") || "[]"
+        );
+
+    const container =
+        document.getElementById("submissionList");
+
+    if(!entries.length){
+
+        container.innerHTML =
+            '<div class="empty">No submissions yet.</div>';
+
+        return;
+    }
+
+    container.innerHTML =
+        entries.slice().reverse().map(entry => {
+
+            let badgeClass = "pending";
+
+            if(entry.status === "Approved")
+                badgeClass = "approved";
+
+            if(entry.status === "Returned")
+                badgeClass = "returned";
+
+            return `
+            <div class="entry">
+
+                <div class="entry-top">
+
+                    <div>
+                        <div class="entry-title">
+                            ${escapeHTML(entry.className)}
+                            -
+                            ${escapeHTML(entry.section)}
+                            •
+                            ${escapeHTML(entry.subject)}
+                        </div>
+
+                        <div class="entry-meta">
+                            ${escapeHTML(entry.date)}
+                        </div>
+                    </div>
+
+                    <span class="badge ${badgeClass}">
+                        ${escapeHTML(entry.status)}
+                    </span>
+
+                </div>
+
+                ${
+                    entry.reason
+                    ?
+                    `<div class="entry-meta">
+                        Return Reason: ${escapeHTML(entry.reason)}
+                    </div>`
+                    :
+                    ""
+                }
+
+            </div>
+            `;
+
+        }).join("");
+}
+
+
+function loadAnnouncements(){
+
+    const announcements =
+        JSON.parse(
+            localStorage.getItem("schoolAnnouncements") || "[]"
+        );
+
+    const container =
+        document.getElementById("announcementList");
+
+    if(!announcements.length){
+
+        container.innerHTML =
+            '<div class="empty">No announcements available.</div>';
+
+        return;
+    }
+
+    container.innerHTML =
+        announcements.slice().reverse().map(item => {
+
+            return `
+            <div class="announcement">
+
+                <h4>
+                    ${escapeHTML(item.title)}
+                </h4>
+
+                <p>
+                    ${escapeHTML(item.message)}
+                </p>
+
+            </div>
+            `;
+
+        }).join("");
+}
+
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+todayDate();
+loadDraft();
+loadEntries();
+loadAnnouncements();
+
+</script>
+
+</body>
+</html>

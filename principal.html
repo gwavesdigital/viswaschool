@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#002B4A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Sri Viswa Principal Desk">
+
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="sriviswalogo.png">
+<link rel="apple-touch-icon" href="sriviswalogo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<title>Principal Desk | Sri Viswa School</title>
+
+<style>
+:root{
+    --sv-navy:#002B4A;
+    --sv-blue:#005799;
+    --sv-bright-blue:#2E83C6;
+    --sv-green:#00923F;
+    --white:#FFFFFF;
+    --background:#F4F8FC;
+    --text:#002B4A;
+    --muted:#607789;
+    --border:rgba(0,43,74,.10);
+    --shadow:0 20px 55px rgba(0,43,74,.12);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    font-family:"Inter",sans-serif;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 10% 10%,rgba(46,131,198,.12),transparent 30%),
+        radial-gradient(circle at 90% 80%,rgba(0,146,63,.07),transparent 28%),
+        linear-gradient(135deg,#fff 0%,#F4F8FC 50%,#EEF5FA 100%);
+}
+
+.background{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:0;
+}
+
+.background-glow{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(80px);
+}
+
+.glow-blue{
+    width:350px;
+    height:350px;
+    top:-160px;
+    left:-120px;
+    background:var(--sv-bright-blue);
+    opacity:.20;
+}
+
+.glow-green{
+    width:300px;
+    height:300px;
+    right:-130px;
+    bottom:0;
+    background:var(--sv-green);
+    opacity:.09;
+}
+
+.grid{
+    position:absolute;
+    inset:0;
+    opacity:.025;
+    background-image:
+        linear-gradient(var(--sv-navy) 1px,transparent 1px),
+        linear-gradient(90deg,var(--sv-navy) 1px,transparent 1px);
+    background-size:50px 50px;
+}
+
+.watermark{
+    position:fixed;
+    left:50%;
+    top:53%;
+    width:min(500px,72vw);
+    transform:translate(-50%,-50%);
+    opacity:.035;
+    pointer-events:none;
+}
+
+.app{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    z-index:1;
+}
+
+header{
+    position:sticky;
+    top:0;
+    z-index:20;
+    min-height:78px;
+    padding:12px 5%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    background:rgba(255,255,255,.90);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(0,43,74,.09);
+    box-shadow:0 5px 25px rgba(0,43,74,.04);
+}
+
+.header-brand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.header-logo{
+    width:56px;
+    height:56px;
+    object-fit:contain;
+    background:#fff;
+    border-radius:12px;
+    padding:3px;
+}
+
+.header-school{
+    font-size:16px;
+    font-weight:800;
+}
+
+.header-location{
+    margin-top:3px;
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:1.7px;
+    color:var(--sv-green);
+}
+
+.header-actions{
+    display:flex;
+    gap:10px;
+}
+
+.header-btn{
+    border:1px solid rgba(0,43,74,.10);
+    background:#fff;
+    color:var(--sv-navy);
+    padding:10px 15px;
+    border-radius:11px;
+    font-family:inherit;
+    font-size:10px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.logout{
+    background:var(--sv-green);
+    color:#fff;
+    border-color:var(--sv-green);
+}
+
+main{
+    flex:1;
+    width:min(1180px,100%);
+    margin:auto;
+    padding:35px 20px 50px;
+}
+
+.page-heading{
+    margin-bottom:25px;
+}
+
+.eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 13px;
+    border-radius:50px;
+    background:rgba(0,146,63,.06);
+    border:1px solid rgba(0,146,63,.12);
+    color:var(--sv-green);
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:1.6px;
+}
+
+.dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--sv-green);
+    box-shadow:0 0 10px rgba(0,146,63,.45);
+}
+
+.page-heading h1{
+    margin-top:14px;
+    font-family:"Playfair Display",serif;
+    font-size:clamp(34px,5vw,52px);
+    background:linear-gradient(135deg,var(--sv-navy),var(--sv-blue),var(--sv-green));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.page-heading p{
+    margin-top:8px;
+    color:var(--muted);
+    font-size:12px;
+}
+
+.today{
+    color:var(--sv-green);
+    font-weight:700;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.stat{
+    padding:20px;
+    border-radius:18px;
+    background:rgba(255,255,255,.88);
+    border:1px solid var(--border);
+    box-shadow:0 12px 35px rgba(0,43,74,.07);
+}
+
+.stat-icon{
+    font-size:22px;
+}
+
+.stat-number{
+    margin-top:10px;
+    font-size:28px;
+    font-weight:800;
+}
+
+.stat-label{
+    margin-top:3px;
+    color:var(--muted);
+    font-size:10px;
+    font-weight:600;
+}
+
+.panel{
+    padding:25px;
+    margin-bottom:22px;
+    border-radius:22px;
+    background:rgba(255,255,255,.90);
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+}
+
+.panel-heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.panel-heading h2{
+    font-size:18px;
+    font-weight:800;
+}
+
+.panel-heading span{
+    color:var(--muted);
+    font-size:10px;
+}
+
+.job{
+    padding:18px;
+    margin-bottom:12px;
+    border:1px solid rgba(0,43,74,.08);
+    border-radius:16px;
+    background:#FAFCFE;
+}
+
+.job-head{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.job-title{
+    font-size:13px;
+    font-weight:800;
+}
+
+.job-meta{
+    margin-top:5px;
+    color:var(--muted);
+    font-size:9px;
+}
+
+.job-content{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:15px;
+}
+
+.content-box{
+    padding:12px;
+    border-radius:10px;
+    background:#fff;
+    border:1px solid rgba(0,43,74,.07);
+}
+
+.content-box strong{
+    display:block;
+    font-size:9px;
+    color:var(--sv-blue);
+    margin-bottom:5px;
+}
+
+.content-box p{
+    font-size:10px;
+    line-height:1.6;
+    color:var(--muted);
+    white-space:pre-wrap;
+}
+
+.job-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:15px;
+}
+
+.btn{
+    padding:10px 15px;
+    border:none;
+    border-radius:10px;
+    font-family:inherit;
+    font-size:9px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.approve{
+    background:var(--sv-green);
+    color:#fff;
+}
+
+.return{
+    background:#FFF0F0;
+    color:#B32626;
+}
+
+.completed{
+    padding:14px;
+    border-radius:13px;
+    background:#FAFCFE;
+    border:1px solid rgba(0,43,74,.07);
+    margin-bottom:9px;
+}
+
+.completed-head{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.badge{
+    padding:5px 9px;
+    border-radius:30px;
+    font-size:8px;
+    font-weight:800;
+}
+
+.approved-badge{
+    background:#E5F7EC;
+    color:#087B39;
+}
+
+.returned-badge{
+    background:#FCE7E7;
+    color:#B32626;
+}
+
+.announcement-form{
+    display:grid;
+    gap:12px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.field label{
+    font-size:10px;
+    font-weight:800;
+}
+
+.field input,
+.field textarea{
+    width:100%;
+    border:1px solid rgba(0,43,74,.12);
+    background:#F8FBFD;
+    border-radius:11px;
+    padding:12px;
+    font-family:inherit;
+    font-size:11px;
+    outline:none;
+}
+
+.field textarea{
+    min-height:110px;
+    resize:vertical;
+}
+
+.field input:focus,
+.field textarea:focus{
+    border-color:var(--sv-green);
+    box-shadow:0 0 0 3px rgba(0,146,63,.08);
+    background:#fff;
+}
+
+.publish{
+    justify-self:end;
+    background:linear-gradient(135deg,var(--sv-green),#006C32);
+    color:#fff;
+    box-shadow:0 8px 20px rgba(0,146,63,.18);
+}
+
+.announcement{
+    margin-top:15px;
+    padding:15px;
+    border-left:3px solid var(--sv-green);
+    border-radius:10px;
+    background:#F7FBF9;
+}
+
+.announcement h4{
+    font-size:12px;
+}
+
+.announcement p{
+    margin-top:5px;
+    color:var(--muted);
+    font-size:10px;
+    line-height:1.6;
+}
+
+.empty{
+    padding:25px;
+    text-align:center;
+    color:var(--muted);
+    font-size:11px;
+}
+
+footer{
+    padding:18px;
+    text-align:center;
+    background:rgba(255,255,255,.80);
+    border-top:1px solid rgba(0,43,74,.08);
+}
+
+.footer-designed{
+    color:#718595;
+    font-size:10px;
+}
+
+.footer-designed strong{
+    color:var(--sv-blue);
+}
+
+.footer-phone{
+    display:inline-block;
+    margin-top:6px;
+    color:var(--sv-green);
+    text-decoration:none;
+    font-size:11px;
+    font-weight:800;
+}
+
+@media(max-width:700px){
+
+    header{
+        padding:10px 15px;
+    }
+
+    .header-logo{
+        width:46px;
+        height:46px;
+    }
+
+    .header-school{
+        font-size:12px;
+    }
+
+    .header-location{
+        font-size:7px;
+    }
+
+    .header-btn{
+        padding:9px 10px;
+        font-size:8px;
+    }
+
+    main{
+        padding:25px 14px 35px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .panel{
+        padding:18px;
+        border-radius:18px;
+    }
+
+    .job-head{
+        flex-direction:column;
+    }
+
+    .job-content{
+        grid-template-columns:1fr;
+    }
+
+    .job-actions{
+        flex-direction:column;
+    }
+
+    .btn{
+        width:100%;
+    }
+
+    .publish{
+        width:100%;
+        justify-self:stretch;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background">
+    <div class="background-glow glow-blue"></div>
+    <div class="background-glow glow-green"></div>
+    <div class="grid"></div>
+</div>
+
+<img src="sriviswalogo.png" class="watermark" alt="">
+
+<div class="app">
+
+<header>
+
+    <div class="header-brand">
+
+        <img src="sriviswalogo.png"
+             class="header-logo"
+             alt="Sri Viswa School">
+
+        <div>
+            <div class="header-school">
+                SRI VISWA SCHOOL
+            </div>
+
+            <div class="header-location">
+                PALAKOLLU
+            </div>
+        </div>
+
+    </div>
+
+    <div class="header-actions">
+
+        <button class="header-btn"
+                onclick="goHome()">
+            ⌂ HOME
+        </button>
+
+        <button class="header-btn logout"
+                onclick="logout()">
+            LOGOUT
+        </button>
+
+    </div>
+
+</header>
+
+
+<main>
+
+<section class="page-heading">
+
+    <div class="eyebrow">
+        <span class="dot"></span>
+        ADMINISTRATION PORTAL
+    </div>
+
+    <h1>Principal Desk</h1>
+
+    <p>
+        Review E-Diary submissions, manage announcements and monitor school updates.
+        <span class="today" id="today"></span>
+    </p>
+
+</section>
+
+
+<div class="stats">
+
+    <div class="stat">
+        <div class="stat-icon">⏳</div>
+        <div class="stat-number" id="pendingCount">0</div>
+        <div class="stat-label">Pending Jobs</div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-icon">✅</div>
+        <div class="stat-number" id="approvedCount">0</div>
+        <div class="stat-label">Approved Jobs</div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-icon">↩️</div>
+        <div class="stat-number" id="returnedCount">0</div>
+        <div class="stat-label">Returned Jobs</div>
+    </div>
+
+</div>
+
+
+<section class="panel">
+
+    <div class="panel-heading">
+        <h2>⏳ Pending Jobs</h2>
+        <span>Awaiting Principal Review</span>
+    </div>
+
+    <div id="pendingJobs"></div>
+
+</section>
+
+
+<section class="panel">
+
+    <div class="panel-heading">
+        <h2>📋 Completed Jobs</h2>
+        <span>Approval History</span>
+    </div>
+
+    <div id="completedJobs"></div>
+
+</section>
+
+
+<section class="panel">
+
+    <div class="panel-heading">
+        <h2>📢 School Announcement</h2>
+        <span>Official Communication</span>
+    </div>
+
+    <form class="announcement-form"
+          id="announcementForm">
+
+        <div class="field">
+
+            <label>ANNOUNCEMENT TITLE</label>
+
+            <input type="text"
+                   id="announcementTitle"
+                   placeholder="Enter announcement title"
+                   required>
+
+        </div>
+
+        <div class="field">
+
+            <label>MESSAGE</label>
+
+            <textarea id="announcementMessage"
+                      placeholder="Write official school announcement..."
+                      required></textarea>
+
+        </div>
+
+        <button class="btn publish"
+                type="submit">
+
+            📢 PUBLISH ANNOUNCEMENT
+
+        </button>
+
+    </form>
+
+    <div id="announcementList"></div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-designed">
+        Designed by <strong>Team @Valiass</strong>
+    </div>
+
+    <a href="tel:+918985361991"
+       class="footer-phone">
+
+        📞 +91 8985361991
+
+    </a>
+
+</footer>
+
+</div>
+
+
+<script>
+
+const PRINCIPAL_PASSWORD = "2026";
+
+if(sessionStorage.getItem("principalLoggedIn") !== "true"){
+    window.location.href = "index.html";
+}
+
+function goHome(){
+    window.location.href = "index.html";
+}
+
+function logout(){
+    sessionStorage.removeItem("principalLoggedIn");
+    window.location.href = "index.html";
+}
+
+function setToday(){
+
+    const now = new Date();
+
+    document.getElementById("today").textContent =
+        " • " +
+        now.toLocaleDateString(
+            "en-IN",
+            {
+                weekday:"long",
+                year:"numeric",
+                month:"long",
+                day:"numeric"
+            }
+        );
+}
+
+
+function loadPendingJobs(){
+
+    const jobs =
+        JSON.parse(
+            localStorage.getItem("principalPendingJobs") || "[]"
+        );
+
+    document.getElementById("pendingCount").textContent =
+        jobs.length;
+
+    const container =
+        document.getElementById("pendingJobs");
+
+    if(!jobs.length){
+
+        container.innerHTML =
+            '<div class="empty">✓ No pending E-Diary jobs.</div>';
+
+        return;
+    }
+
+    container.innerHTML =
+        jobs.slice().reverse().map(job => {
+
+            return `
+            <div class="job">
+
+                <div class="job-head">
+
+                    <div>
+
+                        <div class="job-title">
+                            ${escapeHTML(job.className)}
+                            -
+                            ${escapeHTML(job.section)}
+                            •
+                            ${escapeHTML(job.subject)}
+                        </div>
+
+                        <div class="job-meta">
+                            Date: ${escapeHTML(job.date)}
+                        </div>
+
+                    </div>
+
+                    <div class="badge"
+                         style="background:#FFF5D8;color:#A36B00;">
+                        PENDING REVIEW
+                    </div>
+
+                </div>
+
+                <div class="job-content">
+
+                    <div class="content-box">
+
+                        <strong>CLASSWORK</strong>
+
+                        <p>
+                            ${escapeHTML(job.classwork)}
+                        </p>
+
+                    </div>
+
+                    <div class="content-box">
+
+                        <strong>HOMEWORK</strong>
+
+                        <p>
+                            ${escapeHTML(job.homework)}
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="job-actions">
+
+                    <button class="btn return"
+                            onclick="returnJob(${job.id})">
+
+                        ↩ RETURN
+
+                    </button>
+
+                    <button class="btn approve"
+                            onclick="approveJob(${job.id})">
+
+                        ✅ APPROVE
+
+                    </button>
+
+                </div>
+
+            </div>
+            `;
+
+        }).join("");
+}
+
+
+function approveJob(id){
+
+    const pending =
+        JSON.parse(
+            localStorage.getItem("principalPendingJobs") || "[]"
+        );
+
+    const job =
+        pending.find(item => item.id === id);
+
+    if(!job) return;
+
+    job.status = "Approved";
+    job.reviewedAt = new Date().toISOString();
+
+    const remaining =
+        pending.filter(item => item.id !== id);
+
+    localStorage.setItem(
+        "principalPendingJobs",
+        JSON.stringify(remaining)
+    );
+
+    updateTeacherEntry(
+        id,
+        "Approved",
+        ""
+    );
+
+    loadAll();
+
+}
+
+
+function returnJob(id){
+
+    const reason =
+        prompt(
+            "Enter reason for returning this E-Diary:"
+        );
+
+    if(reason === null) return;
+
+    const cleanReason =
+        reason.trim() || "Please review and update.";
+
+    const pending =
+        JSON.parse(
+            localStorage.getItem("principalPendingJobs") || "[]"
+        );
+
+    const remaining =
+        pending.filter(item => item.id !== id);
+
+    localStorage.setItem(
+        "principalPendingJobs",
+        JSON.stringify(remaining)
+    );
+
+    updateTeacherEntry(
+        id,
+        "Returned",
+        cleanReason
+    );
+
+    loadAll();
+}
+
+
+function updateTeacherEntry(id,status,reason){
+
+    const entries =
+        JSON.parse(
+            localStorage.getItem("teacherEntries") || "[]"
+        );
+
+    const index =
+        entries.findIndex(item => item.id === id);
+
+    if(index !== -1){
+
+        entries[index].status = status;
+        entries[index].reason = reason;
+        entries[index].reviewedAt =
+            new Date().toISOString();
+
+        localStorage.setItem(
+            "teacherEntries",
+            JSON.stringify(entries)
+        );
+    }
+}
+
+
+function loadCompletedJobs(){
+
+    const entries =
+        JSON.parse(
+            localStorage.getItem("teacherEntries") || "[]"
+        );
+
+    const completed =
+        entries.filter(
+            item =>
+                item.status === "Approved" ||
+                item.status === "Returned"
+        );
+
+    let approved = 0;
+    let returned = 0;
+
+    completed.forEach(item => {
+
+        if(item.status === "Approved")
+            approved++;
+
+        if(item.status === "Returned")
+            returned++;
+
+    });
+
+    document.getElementById("approvedCount").textContent =
+        approved;
+
+    document.getElementById("returnedCount").textContent =
+        returned;
+
+    const container =
+        document.getElementById("completedJobs");
+
+    if(!completed.length){
+
+        container.innerHTML =
+            '<div class="empty">No completed jobs yet.</div>';
+
+        return;
+    }
+
+    container.innerHTML =
+        completed.slice().reverse().map(job => {
+
+            const approved =
+                job.status === "Approved";
+
+            return `
+            <div class="completed">
+
+                <div class="completed-head">
+
+                    <div>
+
+                        <div class="job-title">
+                            ${escapeHTML(job.className)}
+                            -
+                            ${escapeHTML(job.section)}
+                            •
+                            ${escapeHTML(job.subject)}
+                        </div>
+
+                        <div class="job-meta">
+                            ${escapeHTML(job.date)}
+                        </div>
+
+                    </div>
+
+                    <span class="badge ${
+                        approved
+                        ? "approved-badge"
+                        : "returned-badge"
+                    }">
+
+                        ${escapeHTML(job.status)}
+
+                    </span>
+
+                </div>
+
+                ${
+                    job.reason
+                    ?
+                    `<div class="job-meta">
+                        Return Reason:
+                        ${escapeHTML(job.reason)}
+                    </div>`
+                    :
+                    ""
+                }
+
+            </div>
+            `;
+
+        }).join("");
+}
+
+
+document.getElementById("announcementForm")
+.addEventListener("submit",function(event){
+
+    event.preventDefault();
+
+    const title =
+        document.getElementById(
+            "announcementTitle"
+        ).value.trim();
+
+    const message =
+        document.getElementById(
+            "announcementMessage"
+        ).value.trim();
+
+    const announcements =
+        JSON.parse(
+            localStorage.getItem("schoolAnnouncements") || "[]"
+        );
+
+    announcements.push({
+        id:Date.now(),
+        title:title,
+        message:message,
+        publishedAt:new Date().toISOString()
+    });
+
+    localStorage.setItem(
+        "schoolAnnouncements",
+        JSON.stringify(announcements)
+    );
+
+    this.reset();
+
+    loadAnnouncements();
+
+    alert("Announcement published successfully.");
+
+});
+
+
+function loadAnnouncements(){
+
+    const announcements =
+        JSON.parse(
+            localStorage.getItem("schoolAnnouncements") || "[]"
+        );
+
+    const container =
+        document.getElementById("announcementList");
+
+    if(!announcements.length){
+        container.innerHTML = "";
+        return;
+    }
+
+    container.innerHTML =
+        announcements.slice().reverse().map(item => {
+
+            return `
+            <div class="announcement">
+
+                <h4>
+                    ${escapeHTML(item.title)}
+                </h4>
+
+                <p>
+                    ${escapeHTML(item.message)}
+                </p>
+
+            </div>
+            `;
+
+        }).join("");
+}
+
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+function loadAll(){
+
+    loadPendingJobs();
+    loadCompletedJobs();
+    loadAnnouncements();
+
+}
+
+
+setToday();
+loadAll();
+
+</script>
+
+</body>
+</html>
