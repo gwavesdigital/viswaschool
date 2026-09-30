@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color"
+          content="#0f172a">
+
+    <title>Teacher Desk | Sri Viswa School</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8fafc;
+        }
+
+        .navy {
+            background: #0f172a;
+        }
+
+        .gold {
+            color: #d4a017;
+        }
+
+        .gold-bg {
+            background: #d4a017;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(15, 23, 42, 0.08);
+        }
+
+        .hidden-page {
+            display: none !important;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     LOGIN PAGE
+========================================================= -->
+
+<div id="loginPage"
+     class="min-h-screen flex items-center justify-center px-5">
+
+    <div class="card w-full max-w-md p-7">
+
+
+        <!-- LOGO / SCHOOL -->
+
+        <div class="text-center mb-8">
+
+            <!-- Replace with official Sri Viswa logo -->
+
+            <img
+                src="https://via.placeholder.com/100"
+                alt="Sri Viswa School Logo"
+                class="w-24 h-24 mx-auto mb-4 object-contain"
+            >
+
+            <h1 class="text-2xl font-bold text-slate-900">
+                SRI VISWA SCHOOL
+            </h1>
+
+            <p class="text-slate-500">
+                PALAKOLLU
+            </p>
+
+            <h2 class="text-xl font-bold gold mt-4">
+                Teacher Desk
+            </h2>
+
+        </div>
+
+
+        <!-- PASSWORD ONLY -->
+
+        <label
+            for="teacherPassword"
+            class="block text-sm font-semibold text-slate-700 mb-2"
+        >
+            Password / PIN
+        </label>
+
+        <input
+            type="password"
+            id="teacherPassword"
+            placeholder="Enter Password / PIN"
+            autocomplete="off"
+            class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+        >
+
+
+        <button
+            onclick="teacherLogin()"
+            class="w-full navy text-white py-3 rounded-xl font-semibold"
+        >
+            Continue
+        </button>
+
+
+        <p
+            id="loginError"
+            class="text-red-600 text-sm text-center mt-4 hidden"
+        >
+            Incorrect Password / PIN
+        </p>
+
+
+        <div class="text-center mt-7">
+
+            <a
+                href="index.html"
+                class="text-sm text-slate-500 hover:text-slate-900"
+            >
+                ← Back to Home
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     TEACHER DASHBOARD
+========================================================= -->
+
+<div id="dashboardPage"
+     class="hidden-page min-h-screen">
+
+
+    <!-- HEADER -->
+
+    <header class="navy text-white">
+
+        <div class="max-w-6xl mx-auto px-5 py-5">
+
+            <div class="flex items-center justify-between gap-4">
+
+                <div>
+
+                    <p class="text-xs md:text-sm text-slate-300">
+                        SRI VISWA SCHOOL, PALAKOLLU
+                    </p>
+
+                    <h1 class="text-xl md:text-2xl font-bold">
+                        Teacher Desk
+                    </h1>
+
+                </div>
+
+
+                <button
+                    onclick="logout()"
+                    class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg text-sm"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- MAIN -->
+
+    <main class="max-w-6xl mx-auto px-5 py-7">
+
+
+        <!-- DATE -->
+
+        <div class="mb-7">
+
+            <p class="text-sm text-slate-500">
+                Today's Date
+            </p>
+
+            <h2
+                id="todayDate"
+                class="text-lg font-bold text-slate-900"
+            ></h2>
+
+        </div>
+
+
+
+        <!-- QUICK ACTIONS -->
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+
+
+            <!-- E-DIARY -->
+
+            <button
+                onclick="showSection('diarySection')"
+                class="card p-6 text-left hover:shadow-lg"
+            >
+
+                <div class="text-3xl mb-3">
+                    📘
+                </div>
+
+                <h3 class="font-bold text-lg">
+                    E-Diary
+                </h3>
+
+                <p class="text-sm text-slate-500 mt-1">
+                    Create and send today's diary
+                </p>
+
+            </button>
+
+
+
+            <!-- ANNOUNCEMENTS -->
+
+            <button
+                onclick="showSection('announcementSection')"
+                class="card p-6 text-left hover:shadow-lg"
+            >
+
+                <div class="text-3xl mb-3">
+                    📢
+                </div>
+
+                <h3 class="font-bold text-lg">
+                    Announcements
+                </h3>
+
+                <p class="text-sm text-slate-500 mt-1">
+                    View school announcements
+                </p>
+
+            </button>
+
+
+
+            <!-- SUBMISSIONS -->
+
+            <button
+                onclick="showSection('entriesSection'); loadEntries();"
+                class="card p-6 text-left hover:shadow-lg"
+            >
+
+                <div class="text-3xl mb-3">
+                    📋
+                </div>
+
+                <h3 class="font-bold text-lg">
+                    My Submissions
+                </h3>
+
+                <p class="text-sm text-slate-500 mt-1">
+                    View your submitted diaries
+                </p>
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             E-DIARY
+        ====================================================== -->
+
+        <section
+            id="diarySection"
+            class="card p-6 mb-7"
+        >
+
+            <div class="mb-6">
+
+                <h2 class="text-xl font-bold text-slate-900">
+                    Create E-Diary
+                </h2>
+
+                <p class="text-sm text-slate-500 mt-1">
+                    Enter class information and send it to Principal Desk
+                </p>
+
+            </div>
+
+
+            <form id="diaryForm">
+
+
+                <!-- DATE -->
+
+                <label
+                    for="diaryDate"
+                    class="block text-sm font-semibold text-slate-700 mb-2"
+                >
+                    Date
+                </label>
+
+                <input
+                    type="date"
+                    id="diaryDate"
+                    required
+                    class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-5"
+                >
+
+
+                <!-- CLASS -->
+
+                <label
+                    for="className"
+                    class="block text-sm font-semibold text-slate-700 mb-2"
+                >
+                    Class
+                </label>
+
+                <select
+                    id="className"
+                    required
+                    class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-5"
+                >
+
+                    <option value="">
+                        Select Class
+                    </option>
+
+                    <option>Class 1</option>
+                    <option>Class 2</option>
+                    <option>Class 3</option>
+                    <option>Class 4</option>
+                    <option>Class 5</option>
+                    <option>Class 6</option>
+                    <option>Class 7</option>
+                    <option>Class 8</option>
+                    <option>Class 9</option>
+                    <option>Class 10</option>
+
+                </select>
+
+
+
+                <!-- SECTION -->
+
+                <label
+                    for="sectionName"
+                    class="block text-sm font-semibold text-slate-700 mb-2"
+                >
+                    Section
+                </label>
+
+                <select
+                    id="sectionName"
+                    required
+                    class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-5"
+                >
+
+                    <option value="">
+                        Select Section
+                    </option>
+
+                    <option>A</option>
+                    <option>B</option>
+                    <option>C</option>
+                    <option>D</option>
+
+                </select>
+
+
+
+                <!-- SUBJECT -->
+
+                <label
+                    for="subjectName"
+                    class="block text-sm font-semibold text-slate-700 mb-2"
+                >
+                    Subject
+                </label>
+
+                <select
+                    id="subjectName"
+                    required
+                    class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-5"
+                >
+
+                    <option value="">
+                        Select Subject
+                    </option>
+
+                    <option>English</option>
+                    <option>Telugu</option>
+                    <option>Hindi</option>
+                    <option>Mathematics</option>
+                    <option>Science</option>
+                    <option>Social Studies</option>
+                    <option>Computer Science</option>
+
+                </select>
+
+
+
+                <!-- CLASSWORK -->
+
+                <label
+                    for="classwork"
+                    class="block text-sm font-semibold text-slate-700 mb-2"
+                >
+                    Classwork
+                </label>
+
+                <textarea
+                    id="classwork"
+                    rows="4"
+                    required
+                    placeholder="Enter today's classwork..."
+                    class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-5"
+                ></textarea>
+
+
+
+                <!-- HOMEWORK -->
+
+                <label
+                    for="homework"
+                    class="block text-sm font-semibold text-slate-700 mb-2"
+                >
+                    Homework
+                </label>
+
+                <textarea
+                    id="homework"
+                    rows="4"
+                    placeholder="Enter homework..."
+                    class="w-full border border-slate-300 rounded-xl px-4 py-3"
+                ></textarea>
+
+
+
+                <!-- =================================================
+                     BOTTOM ACTION BUTTONS
+                ================================================== -->
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6">
+
+
+                    <!-- SAVE -->
+
+                    <button
+                        type="button"
+                        onclick="saveDraft()"
+                        class="bg-slate-700 hover:bg-slate-800 text-white py-3 px-4 rounded-xl font-semibold"
+                    >
+                        💾 Save Draft
+                    </button>
+
+
+
+                    <!-- CLEAR -->
+
+                    <button
+                        type="button"
+                        onclick="clearDiary()"
+                        class="bg-slate-200 hover:bg-slate-300 text-slate-800 py-3 px-4 rounded-xl font-semibold"
+                    >
+                        🗑️ Clear
+                    </button>
+
+
+
+                    <!-- SEND -->
+
+                    <button
+                        type="submit"
+                        class="bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-xl font-semibold"
+                    >
+                        📤 Send to Principal Desk
+                    </button>
+
+                </div>
+
+
+                <p
+                    id="draftStatus"
+                    class="text-sm text-green-600 text-center mt-4 hidden"
+                >
+                    Draft saved successfully.
+                </p>
+
+            </form>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             ANNOUNCEMENTS
+        ====================================================== -->
+
+        <section
+            id="announcementSection"
+            class="card p-6 mb-7 hidden"
+        >
+
+            <h2 class="text-xl font-bold mb-5">
+                School Announcements
+            </h2>
+
+            <div id="teacherAnnouncements">
+
+                <p class="text-sm text-slate-500">
+                    No announcements available.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             MY SUBMISSIONS
+        ====================================================== -->
+
+        <section
+            id="entriesSection"
+            class="card p-6 mb-7 hidden"
+        >
+
+            <h2 class="text-xl font-bold mb-5">
+                My Submissions
+            </h2>
+
+            <div id="entriesList">
+
+                <p class="text-sm text-slate-500">
+                    No submissions yet.
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- FOOTER -->
+
+    <footer class="navy text-white text-center py-5">
+
+        <p class="text-sm">
+            Designed by Team @Valiass
+        </p>
+
+        <p class="text-sm text-slate-300 mt-1">
+            +91 8985361991
+        </p>
+
+    </footer>
+
+
+</div>
+
+
+
+<script>
+
+
+/* ============================================================
+   TEACHER PASSWORD
+============================================================ */
+
+const TEACHER_PASSWORD = "sriviswa";
+
+
+
+/* ============================================================
+   LOGIN
+============================================================ */
+
+function teacherLogin() {
+
+    const password =
+        document.getElementById("teacherPassword").value.trim();
+
+    const error =
+        document.getElementById("loginError");
+
+
+    if (password === TEACHER_PASSWORD) {
+
+        document
+            .getElementById("loginPage")
+            .classList.add("hidden-page");
+
+        document
+            .getElementById("dashboardPage")
+            .classList.remove("hidden-page");
+
+        error.classList.add("hidden");
+
+        setDate();
+
+        loadDraft();
+
+        loadAnnouncements();
+
+    } else {
+
+        error.classList.remove("hidden");
+
+    }
+
+}
+
+
+
+/* ============================================================
+   ENTER KEY LOGIN
+============================================================ */
+
+document
+    .getElementById("teacherPassword")
+    .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+            teacherLogin();
+        }
+
+    });
+
+
+
+/* ============================================================
+   LOGOUT
+============================================================ */
+
+function logout() {
+
+    document
+        .getElementById("dashboardPage")
+        .classList.add("hidden-page");
+
+    document
+        .getElementById("loginPage")
+        .classList.remove("hidden-page");
+
+    document
+        .getElementById("teacherPassword")
+        .value = "";
+
+}
+
+
+
+/* ============================================================
+   DATE
+============================================================ */
+
+function setDate() {
+
+    const today = new Date();
+
+    document.getElementById("todayDate").innerText =
+        today.toLocaleDateString(
+            "en-IN",
+            {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            }
+        );
+
+
+    document.getElementById("diaryDate").value =
+        today.toISOString().split("T")[0];
+
+}
+
+
+
+/* ============================================================
+   SECTION NAVIGATION
+============================================================ */
+
+function showSection(sectionId) {
+
+    document
+        .getElementById("diarySection")
+        .classList.add("hidden");
+
+    document
+        .getElementById("announcementSection")
+        .classList.add("hidden");
+
+    document
+        .getElementById("entriesSection")
+        .classList.add("hidden");
+
+
+    document
+        .getElementById(sectionId)
+        .classList.remove("hidden");
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+
+/* ============================================================
+   GET DIARY DATA
+============================================================ */
+
+function getDiaryData() {
+
+    return {
+
+        date:
+            document.getElementById("diaryDate").value,
+
+        className:
+            document.getElementById("className").value,
+
+        section:
+            document.getElementById("sectionName").value,
+
+        subject:
+            document.getElementById("subjectName").value,
+
+        classwork:
+            document.getElementById("classwork").value,
+
+        homework:
+            document.getElementById("homework").value
+
+    };
+
+}
+
+
+
+/* ============================================================
+   SAVE DRAFT
+============================================================ */
+
+function saveDraft() {
+
+    const entry = getDiaryData();
+
+
+    localStorage.setItem(
+        "teacherDiaryDraft",
+        JSON.stringify(entry)
+    );
+
+
+    const status =
+        document.getElementById("draftStatus");
+
+    status.classList.remove("hidden");
+
+    setTimeout(function() {
+
+        status.classList.add("hidden");
+
+    }, 2500);
+
+}
+
+
+
+/* ============================================================
+   LOAD DRAFT
+============================================================ */
+
+function loadDraft() {
+
+    const saved =
+        localStorage.getItem("teacherDiaryDraft");
+
+
+    if (!saved) {
+        return;
+    }
+
+
+    try {
+
+        const entry = JSON.parse(saved);
+
+
+        document.getElementById("diaryDate").value =
+            entry.date || "";
+
+        document.getElementById("className").value =
+            entry.className || "";
+
+        document.getElementById("sectionName").value =
+            entry.section || "";
+
+        document.getElementById("subjectName").value =
+            entry.subject || "";
+
+        document.getElementById("classwork").value =
+            entry.classwork || "";
+
+        document.getElementById("homework").value =
+            entry.homework || "";
+
+
+    } catch (error) {
+
+        localStorage.removeItem("teacherDiaryDraft");
+
+    }
+
+}
+
+
+
+/* ============================================================
+   CLEAR
+============================================================ */
+
+function clearDiary() {
+
+    if (
+        confirm(
+            "Are you sure you want to clear this E-Diary?"
+        )
+    ) {
+
+        document
+            .getElementById("diaryForm")
+            .reset();
+
+        setDate();
+
+        document
+            .getElementById("draftStatus")
+            .classList.add("hidden");
+
+    }
+
+}
+
+
+
+/* ============================================================
+   SEND TO PRINCIPAL
+============================================================ */
+
+document
+    .getElementById("diaryForm")
+    .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+
+        const entry = getDiaryData();
+
+
+        if (
+            !entry.date ||
+            !entry.className ||
+            !entry.section ||
+            !entry.subject ||
+            !entry.classwork
+        ) {
+
+            alert(
+                "Please complete the required E-Diary fields."
+            );
+
+            return;
+
+        }
+
+
+        const submission = {
+
+            id:
+                Date.now(),
+
+            date:
+                entry.date,
+
+            className:
+                entry.className,
+
+            section:
+                entry.section,
+
+            subject:
+                entry.subject,
+
+            classwork:
+                entry.classwork,
+
+            homework:
+                entry.homework,
+
+            status:
+                "Pending Principal Review",
+
+            submittedAt:
+                new Date().toISOString()
+
+        };
+
+
+        let submissions =
+            JSON.parse(
+                localStorage.getItem(
+                    "principalPendingJobs"
+                ) || "[]"
+            );
+
+
+        submissions.push(submission);
+
+
+        localStorage.setItem(
+            "principalPendingJobs",
+            JSON.stringify(submissions)
+        );
+
+
+        /* Save to teacher history */
+
+        let teacherEntries =
+            JSON.parse(
+                localStorage.getItem(
+                    "teacherEntries"
+                ) || "[]"
+            );
+
+
+        teacherEntries.push(submission);
+
+
+        localStorage.setItem(
+            "teacherEntries",
+            JSON.stringify(teacherEntries)
+        );
+
+
+        /* Remove draft */
+
+        localStorage.removeItem(
+            "teacherDiaryDraft"
+        );
+
+
+        alert(
+            "E-Diary sent to Principal Desk successfully."
+        );
+
+
+        document
+            .getElementById("diaryForm")
+            .reset();
+
+        setDate();
+
+        loadEntries();
+
+    });
+
+
+
+/* ============================================================
+   TEACHER SUBMISSIONS
+============================================================ */
+
+function loadEntries() {
+
+    const entries =
+        JSON.parse(
+            localStorage.getItem(
+                "teacherEntries"
+            ) || "[]"
+        );
+
+
+    const list =
+        document.getElementById("entriesList");
+
+
+    if (entries.length === 0) {
+
+        list.innerHTML =
+            `
+            <p class="text-sm text-slate-500">
+                No submissions yet.
+            </p>
+            `;
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+        entries
+            .slice()
+            .reverse()
+            .map(function(entry) {
+
+                let statusClass =
+                    "bg-yellow-100 text-yellow-800";
+
+                if (entry.status === "Approved") {
+
+                    statusClass =
+                        "bg-green-100 text-green-800";
+
+                }
+
+                if (entry.status === "Returned") {
+
+                    statusClass =
+                        "bg-red-100 text-red-800";
+
+                }
+
+
+                return `
+
+                <div class="border rounded-xl p-4 mb-4">
+
+                    <div class="flex flex-col md:flex-row md:justify-between gap-3">
+
+                        <div>
+
+                            <p class="font-bold text-slate-900">
+                                ${escapeHTML(entry.className)}
+                                -
+                                Section ${escapeHTML(entry.section)}
+                            </p>
+
+                            <p class="text-sm text-slate-500 mt-1">
+                                ${escapeHTML(entry.subject)}
+                                |
+                                ${escapeHTML(entry.date)}
+                            </p>
+
+                        </div>
+
+
+                        <span
+                            class="px-3 py-1 rounded-full text-xs font-semibold self-start ${statusClass}"
+                        >
+                            ${escapeHTML(entry.status)}
+                        </span>
+
+                    </div>
+
+
+                    <p class="mt-4 text-sm">
+                        <strong>Classwork:</strong>
+                        ${escapeHTML(entry.classwork)}
+                    </p>
+
+
+                    <p class="mt-2 text-sm">
+                        <strong>Homework:</strong>
+                        ${escapeHTML(entry.homework || "—")}
+                    </p>
+
+                </div>
+
+                `;
+
+            })
+            .join("");
+
+}
+
+
+
+/* ============================================================
+   ANNOUNCEMENTS
+============================================================ */
+
+function loadAnnouncements() {
+
+    const announcement =
+        localStorage.getItem(
+            "schoolAnnouncement"
+        );
+
+
+    const container =
+        document.getElementById(
+            "teacherAnnouncements"
+        );
+
+
+    if (!announcement) {
+
+        container.innerHTML =
+            `
+            <p class="text-sm text-slate-500">
+                No announcements available.
+            </p>
+            `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        `
+        <div class="border-l-4 border-yellow-500 pl-4 py-3">
+
+            <p class="font-semibold text-slate-900">
+                School Announcement
+            </p>
+
+            <p class="text-sm text-slate-600 mt-2">
+                ${escapeHTML(announcement)}
+            </p>
+
+        </div>
+        `;
+
+}
+
+
+
+/* ============================================================
+   HTML SAFETY
+============================================================ */
+
+function escapeHTML(value) {
+
+    const div = document.createElement("div");
+
+    div.textContent = value || "";
+
+    return div.innerHTML;
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
